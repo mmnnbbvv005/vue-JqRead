@@ -9,7 +9,6 @@ Vue.use(InfiniteScroll)
 Vue.use(Lazyload)
 Vue.component(Popup.name, Popup)
 import './assets/less/global.css'
-import 'swiper/dist/css/swiper.css'
 
 // 定义全局变量
 Vue.config.productionTip = false
