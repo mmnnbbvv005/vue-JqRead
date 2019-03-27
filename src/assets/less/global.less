@@ -1,0 +1,157 @@
+// 公有变量
+@rem:100rem;
+@transitionTime: 1s;
+
+// 主色调
+@main_col1:#eb2d4a;
+@main_col2:#3dbafd;
+@main_col3:#80e1ff;
+@main_col4:#e6edf3;
+@main_col5:#fe5f01;
+@main_col6:#ffca3e;
+@main_col7:#fb8f85;
+@main_col8:#464646;
+@map_bg:#e4f4ff;
+
+// 辅色调
+@warning_col:#e81e2a;
+@tips_col:#50aef8;
+@safety_col:#4dc027;
+
+// 字体颜色
+@font_col1:#000000;
+@font_col2:#464646;
+@font_col3:#9a9a9a;
+@font_col4:#dedede;
+@font_col5:#f4f4f4;
+@font_col6:#ffffff;
+@font_col7:#333333;
+
+// 字体大小
+@font_small: 18/@rem; // 小字
+@font_text: 20/@rem; // 一般
+@font_text1: 22/@rem; // 一般1
+@font_text2: 24/@rem; // 一般2
+@font_ord: 26/@rem; // 默认
+@font_title: 30/@rem; // 标题
+@font_title2: 34/@rem; // 大一号标题
+@font_title3: 38/@rem; // 大二号标题
+@font_title4: 42/@rem; // 大三号标题
+@font_big:50/@rem; //特殊大号字体
+@font_max:80/@rem; //最大号字体
+
+h1{ font-size: @font_title4; }
+h2{ font-size: @font_title3; }
+h3{ font-size: @font_title2; }
+h4{ font-size: @font_title; }
+h5{ font-size: @font_text; }
+h6{ font-size: @font_small; }
+
+// 背景颜色
+.bg_info { background-color: #fde9ae; }
+.bg_warning { background-color: #cdecfe; }
+.bg_success { background-color: #d3fdc5; }
+.bg_error { background-color: #fed3d6; }
+.bg_main{ background-color: @main_col1; }
+
+// CCS3快速定义
+.transition(@attr) { transition: @attr @transitionTime; -webkit-transition: @attr @transitionTime; /* Safari */ }
+.rotate(@deg) { transform: rotate(@deg); -ms-transform: rotate(@deg); /* IE 9 */ -moz-transform: rotate(@deg); /* Firefox */ -webkit-transform: rotate(@deg); /* Safari 和 Chrome */ -o-transform: rotate(@deg); /* Opera */ }
+.translateY(@deg) { transform: translateY(@deg); -ms-transform: translateY(@deg); /* IE 9 */ -moz-transform: translateY(@deg); /* Firefox */ -webkit-transform: translateY(@deg); /* Safari 和 Chrome */ -o-transform: translateY(@deg); /* Opera */ }
+.translateX(@deg) { transform: translateX(@deg); -ms-transform: translateX(@deg); /* IE 9 */ -moz-transform: translateX(@deg); /* Firefox */ -webkit-transform: translateX(@deg); /* Safari 和 Chrome */ -o-transform: translateX(@deg); /* Opera */ }
+
+// 初始化
+html{ font-size: 100px; }
+* { padding: 0; margin: 0; border: 0; box-sizing: border-box; }
+body, html { width: 100%; height: 100%; }
+body { margin: 0 auto; min-width: 320px; max-width: 760px; background:#fafafa; }
+body, a,textarea{ font-size: @font_ord; font-family: "微软雅黑"; color: @font_col1; }
+a{ text-decoration: none; }
+ul, li { list-style: none; }
+input, button, select,textarea,a{-webkit-tap-highlight-color: rgba(0,0,0,0);}
+input, button, select,textarea { outline: none; background:none; -webkit-appearance: none; }
+input, button, select, a { cursor: pointer; }
+
+.fontWNormal { font-weight: normal; }
+.LabelH(@i) when (@i < 6) {
+  .LabelH(@i + 1);
+  h@{i} { &:extend(.fontWNormal); }
+}
+.LabelH(0);
+
+// 排版
+.u-container{ margin: 0 auto; width:100%; max-width: 640/@rem; height:auto; }
+.u-padding10{ padding-left: 10/@rem;padding-right: 10/@rem;  }
+.u-padding20{ padding-left: 20/@rem;padding-right: 20/@rem; }
+.u-cenInBlock { display: inline-block; vertical-align: middle; }
+.u-flex-between { display: flex; justify-content:space-between; align-items:center; }
+.u-imgAuto { width: auto; max-width: 100%; height: 100%; vertical-align: middle; }
+.u-aFull { &:extend(.u-cenInBlock ); width: 100%; height: 100%; }
+.u-cleanBoth {
+  &::after,&::before{ content: ''; display: inline-block; clear: both; }
+}
+.u-clearFloat { clear: both; float: none; padding: 0; margin: 0; width: 100%; height: 0.01px; border: 0.01px soild transparent; overflow: hidden; }
+.u-fLeft { float: left; }
+.u-fRinght { float: right; }
+.u-wh100 { width: 100%; height: 100%; }
+.u-absolute{ position: absolute; }
+
+// 文字
+.txt-noneLine{ text-decoration: none; }
+.txt-ellipsis { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.txt-fs0 { font-size: 0;}
+.txt-warning_col{color: @warning_col; }
+.txt-tips_col{color: @tips_col; }
+.txt-safety_col{color: @safety_col; }
+.txt-main_col { color:@main_col1; }
+
+// btn
+.elAct:active { transform: translate(2px, 2px); }
+.btn-footerFixed { z-index: 4; position: fixed; left: 0; bottom: 0; width: 100%; height: 100/@rem; line-height: 100/@rem;
+  .btn-footerContainer { height: 100%; background: @font_col6; box-shadow: -2/@rem -2/@rem 20/@rem 2/@rem rgba(0,0,0,0.15); }
+  .bf-left, .bf-right, .bf-all { &:extend(.txt-ellipsis); padding: 0 15/@rem; height: 100%; }
+  .bf-left { &:extend(.u-fLeft); width: 320/@rem; }
+  .bf-right { &:extend(.u-fRinght); width: (640-320)/@rem; }
+  .bf-all { width: 100%; }
+  .bf-input { padding: 0 15/@rem; width: 100%; height: 100%; text-align: center; font-size: @font_title3; color: @font_col6; letter-spacing: 5/@rem; }
+}
+@media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
+  .btn-footerFixed{ height: (100+34)/@rem;
+      .btn-footerContainer { padding-bottom: 34/@rem;  }
+  }
+}
+
+// 图标及LOGO
+.IconSize(@w){
+  .icon-@{w} { width: @w/@rem; height: @w/@rem; }
+}
+.IconSize(@w,@h){
+  .icon-@{w}-@{h} { width: @w/@rem; height: @h/@rem; }
+}
+[class^="icon"]{ &:extend(.u-cenInBlock ); overflow: hidden; }
+.svgIcon { &:extend(.u-cenInBlock ); fill: currentColor; overflow: hidden;}
+.icon-logo { width:60/@rem; height:60/@rem;}
+.IconSize(176);
+.IconSize(70);
+.IconSize(60);
+.IconSize(50);
+.IconSize(45);
+.IconSize(40);
+.IconSize(35);
+.IconSize(30);
+.IconSize(27);
+.IconSize(27);
+.IconSize(25);
+.IconSize(20);
+.IconSize(18);
+.IconSize(14);
+.IconSize(30,20);
+.IconSize(6,10);
+.IconSize(9,16);
+
+/*--Body大屏美化适配-CSS--Start--*/
+@media screen and (min-width:760px) {
+  body { box-shadow: 0 0 10/@rem 1/@rem rgba(0,0,0,0.25); }
+}
+.mint-indicator{  z-index: 999;}
+.mint-indicator-wrapper{ z-index: 999; }
