@@ -1,5 +1,8 @@
 import request from '@/utils/request'
-
+/**
+ * 获取书籍详情
+ * @param {String} id 书籍ID
+ */
 export function getBook (id) {
   return request({
     url: '/api/book/' + id,
@@ -7,6 +10,10 @@ export function getBook (id) {
   })
 }
 
+/**
+ * 获取书籍相关推荐
+ * @param {String} id  书籍id
+ */
 export function getRecommend (id) {
   return request({
     url: '/api/book/' + id + '/recommend',
@@ -14,6 +21,10 @@ export function getRecommend (id) {
   })
 }
 
+/**
+ * 获取书籍源
+ * @param {String} id 书籍id
+ */
 export function getBookSources (id) {
   return request({
     url: '/api/atoc',
@@ -25,6 +36,10 @@ export function getBookSources (id) {
   })
 }
 
+/**
+ * 获取书籍章节
+ * @param {String} id 书籍id
+ */
 export function getChapters (id) {
   return request({
     url: '/api/atoc/' + id,
@@ -35,6 +50,10 @@ export function getChapters (id) {
   })
 }
 
+/**
+ * 获取章节详细内容
+ * @param {String} link 章节地址
+ */
 export function getBookChapter (link) {
   return request({
     url: '/content/chapter/' + link,

@@ -97,7 +97,7 @@ export default {
         text: '加载中……',
         spinnerType: 'double-bounce'
       })
-      getRankBooks({ id: id }).then((res) => {
+      getRankBooks(id).then((res) => {
         Indicator.close()
         if (this.$route.query.isMore) {
           var li = document.querySelectorAll('.moreli')
