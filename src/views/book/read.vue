@@ -17,8 +17,21 @@
         </ul>
       </div>
     </div>
-    <readFooter v-show="headflag" :source="source" :name="name" :chapter="chapter" :all-chapter="allChapter" :light="light" @NextChapt="nextChapter" @PrevChapt="prevChapter" />
+    <readFooter v-show="headflag" :source="source" :name="name" :chapter="chapter" :all-chapter="allChapter" :light="light" @NextChapt="nextChapter" @PrevChapt="prevChapter" @Chapter="openChapter" />
     <readSetting v-show="settingflag" :font-size="fontSize" />
+    <mt-popup
+      v-model="chaptersVisible"
+      popup-transition="popup-fade"
+    >
+      <div class="chapter">
+        <p>{{ name }}</p>
+        <ul>
+          <li v-for="(item,i) in chapters" :key="i" @click="selChapter(item,i)">
+            {{ item.title }}
+          </li>
+        </ul>
+      </div>
+    </mt-popup>
     <mt-popup
       v-model="popupVisible"
       popup-transition="popup-fade"
@@ -64,6 +77,7 @@ export default {
       allChapter: 0,
       light: true,
       popupVisible: false,
+      chaptersVisible: false,
       fontSize: 34,
       theme: {
         background: '#FAF9DE',
@@ -80,13 +94,14 @@ export default {
     // })
   },
   methods: {
+    // 初始化
     init () {
       if (getStorage('mybooks') && getStorage('mybooks')[this.$route.params.id]) {
         this.GetCata(getStorage('mybooks')[this.$route.params.id].source)
         this.source = getStorage('mybooks')[this.$route.params.id].source
         this.name = getStorage('mybooks')[this.$route.params.id].title
-      } else if (this.$route.query.data) {
-        var obj = JSON.parse(this.$route.query.data)
+      } else if (this.$route.query) {
+        var obj = this.$route.query
         if (obj.source) {
           this.GetCata(obj.source)
           this.source = obj.source
@@ -94,6 +109,7 @@ export default {
         }
       }
     },
+    // 获取书籍章节
     GetCata (id) {
       var link = null
       Indicator.open({
@@ -116,6 +132,7 @@ export default {
         this.GetContent(encodeURIComponent(link))
       })
     },
+    // 获取章节内容
     GetContent (link) {
       getBookChapter(link).then(res => {
         Indicator.close()
@@ -124,6 +141,7 @@ export default {
         document.querySelector('.textcontent').scrollTop = 0
       })
     },
+    // 点击事件判断
     Action (el) {
       var width = document.body.clientWidth / 4
       if (el.clientX <= width) {
@@ -138,6 +156,7 @@ export default {
         this.headflag = !this.headflag
       }
     },
+    // 下一章
     nextChapter () {
       if (this.chapter < this.allChapter) {
         var obj = getStorage('mybooks')
@@ -156,6 +175,7 @@ export default {
         Toast('已经是最新章节了！')
       }
     },
+    // 上一章
     prevChapter () {
       var obj = getStorage('mybooks')
       if (this.chapter <= 0) {
@@ -174,6 +194,7 @@ export default {
         setStorage('mybooks', obj)
       }
     },
+    // 返回
     goBack () {
       var book = null
       if (getStorage('mybooks')) {
@@ -182,19 +203,20 @@ export default {
       if (getStorage('mybooks')[this.$route.params.id]) {
         book[this.$route.params.id].lastChapter = this.chapter
         setStorage('mybooks', book)
-        this.$router.replace('/home')
+        this.$router.go(-1)
       } else {
         MessageBox.confirm('需要将该小说加入书架吗?').then(action => {
-          var storage = JSON.parse(this.$route.query.data)
+          var storage = this.$route.query
           storage.lastChapter = this.chapter
           book[this.$route.params.id] = storage
           setStorage('mybooks', book)
-          this.$router.replace('/home')
+          this.$router.go(-1)
         }).catch(res => {
-          this.$router.replace('/home')
+          this.$router.go(-1)
         })
       }
     },
+    // 全屏
     fullScreen () {
       var el = document.documentElement
       var rfs = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullscreen
@@ -202,6 +224,26 @@ export default {
         rfs.call(el)
       }
       return
+    },
+    // 打开目录
+    openChapter () {
+      this.chaptersVisible = true
+    },
+    // 选择章节
+    selChapter (item, index) {
+      var obj = getStorage('mybooks')
+      this.chapter = index
+      this.title = item.title
+      Indicator.open({
+        text: '加载中……',
+        spinnerType: 'double-bounce'
+      })
+      this.GetContent(encodeURIComponent(item.link))
+      if (getStorage('mybooks') && getStorage('mybooks')[this.$route.params.id]) {
+        obj[this.$route.params.id].lastChapter = this.chapter
+        setStorage('mybooks', obj)
+      }
+      this.chaptersVisible = false
     }
   }
 }
@@ -215,6 +257,12 @@ export default {
 .read_text{
   li{ padding: 0 20/@rem; line-height: 60/@rem;text-indent: 2em; }
   .text_title{ font-weight: 700; text-indent: 0; }}
+
+.chapter{ position: relative; width: 550/@rem; height: 1000/@rem; overflow: auto;
+  p{ position: fixed; top:-1/@rem; width: 100%; height: 60/@rem; line-height: 60/@rem; text-align: center; background: #fff; border-bottom: 2/@rem solid @font_col4; }
+  ul{ margin-top: 60/@rem; }
+  li{ width: 100%; padding: 20/@rem; border-bottom: 2/@rem solid @font_col4; }
+}
 
 .couple{ width: 450/@rem;
   p{ text-align: center; margin-top: 20/@rem; }

@@ -13,7 +13,7 @@
     <div class="cate_content">
       <ul class="cata_ul">
         <li v-for="(item,i) in cataList" :key="i" class="cata_list">
-          <router-link :to="{name:'read',query:{Chapter:inversioFlag?i:cataList.length-1-i,data:$route.query.data},params:{id:$route.params.id}}" class="cata_link txt-ellipsis">
+          <router-link :to="{name:'read',query:{Chapter:inversioFlag?i:cataList.length-1-i,lastChapter: $route.query.lastChapter, title: title, source: $route.query.source},params:{id:$route.params.id}}" class="cata_link txt-ellipsis">
             {{ item.title }}
           </router-link>
         </li>
@@ -39,7 +39,7 @@ export default {
     }
   },
   mounted () {
-    var query = JSON.parse(this.$route.query.data)
+    var query = this.$route.query
     this.GetCata(query.source)
     this.title = query.title
   },
@@ -63,9 +63,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.cata_head{ padding:100/@rem 20/@rem 20/@rem ; background: #fff; font-size: @font_title; display: flex; justify-content: space-between; }
+.cata_head{ position: fixed; top: 80/@rem; padding:30/@rem 20/@rem 20/@rem ; width: 100%; background: #fff; font-size: @font_title; display: flex; justify-content: space-between; }
 .inversion{ font-size: @font_ord; }
-.cate_content{ padding: 10/@rem 20/@rem; }
+.cate_content{ margin-top:90/@rem;  padding: 10/@rem 20/@rem; }
 .cata_ul{ margin-top: 10/@rem; background: #fff; padding: 0 20/@rem;
   .cata_list{ height: 80/@rem;line-height: 80/@rem; border-bottom: 1px solid #ccc; color: @font_col2; }}
 .cata_link{ display: block; width: 100%; height: 100%; }

@@ -10,10 +10,8 @@
       </li>
     </ul>
     <ul>
-      <li>
-        <router-link :to="{path:'/cata/'+$route.params.id,query:{data:JSON.stringify({source:source,title:name})}}" class="cataLink">
-          目录
-        </router-link>
+      <li @click="openChapter">
+        目录
       </li>
       <li @click="changeLight">
         {{ light?'夜间':'白天' }}
@@ -68,6 +66,9 @@ export default {
     },
     couple () {
       this.$parent.popupVisible = true
+    },
+    openChapter () {
+      this.$emit('Chapter')
     }
   }
 }
