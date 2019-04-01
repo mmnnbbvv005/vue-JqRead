@@ -6,7 +6,12 @@
 
 <script>
 import { screenAdaptation } from './utils/tools'
+import { getStorage } from '@/utils/storage'
+import { mapGetters } from 'vuex'
 export default {
+  computed: {
+    ...mapGetters(['userInfo'])
+  },
   mounted () {
     screenAdaptation()
     if ('onorientationchange' in window) {
@@ -15,6 +20,9 @@ export default {
       window.addEventListener('resize', function () {
         screenAdaptation()
       }, false)
+    }
+    if (getStorage('username')) {
+      this.$store.dispatch('SetUserInfo', { username: window.atob(getStorage('username')) })
     }
   }
 }

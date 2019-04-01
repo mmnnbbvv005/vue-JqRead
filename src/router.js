@@ -55,6 +55,16 @@ export default new Router({
       path: '/classifyInfo',
       name: 'classifyInfo',
       component: () => import(/* webpackChunkName: "about" */ './views/classify/classifyInfo.vue')
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import(/* webpackChunkName: "about" */ './views/login/index.vue')
+    },
+    {
+      path: '/feedback',
+      name: 'feedback',
+      component: () => import(/* webpackChunkName: "about" */ './views/mine/feedback.vue')
     }
   ]
 })

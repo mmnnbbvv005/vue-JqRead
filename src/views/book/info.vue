@@ -66,9 +66,11 @@
 
 <script>
 import { getBook, getRecommend, getBookSources } from '@/api/book'
+import { addBook } from '@/api/user'
 import { setStorage, getStorage } from '@/utils/storage'
 import { Indicator, Toast } from 'mint-ui'
 import bookhead from '@/components/Layout/head/index.vue'
+import { mapGetters } from 'vuex'
 export default {
   name: 'Book',
   components: {
@@ -82,6 +84,9 @@ export default {
       source: null,
       storage: {}
     }
+  },
+  computed: {
+    ...mapGetters(['userInfo'])
   },
   watch: {
     // 监听路由变化重新渲染页面
@@ -129,19 +134,29 @@ export default {
     // 加入书架
     addbook () {
       var books = {}
-
-      if (getStorage('mybooks')) {
-        if (!getStorage('mybooks')[this.details._id]) {
-          books = getStorage('mybooks')
+      if (this.userInfo) {
+        books = this.storage
+        addBook({ username: this.userInfo.username, book: books }).then(res => {
+          if (res.status) {
+            console.log(res)
+            Toast('成功添加！')
+            this.$store.dispatch('SetUserInfo', { username: window.atob(getStorage('username')) })
+          }
+        })
+      } else {
+        if (getStorage('mybooks')) {
+          if (!getStorage('mybooks')[this.details._id]) {
+            books = getStorage('mybooks')
+            books[this.details._id] = this.storage
+            setStorage('mybooks', books)
+            Toast('成功添加！')
+          } else {
+            Toast('已经在书架了噢！')
+          }
+        } else {
           books[this.details._id] = this.storage
           setStorage('mybooks', books)
-          Toast('成功添加！')
-        } else {
-          Toast('已经在书架了噢！')
         }
-      } else {
-        books[this.details._id] = this.storage
-        setStorage('mybooks', books)
       }
     },
     // 获取书架源

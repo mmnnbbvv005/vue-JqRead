@@ -252,7 +252,7 @@ export default {
 <style lang="less" scoped>
 .read_frame{ width: 100%; height: 100%; }
 .read{ width: 100%; height: 100%; overflow: hidden; display: flex;flex-direction: column; }
-.read_head{width: 100%; margin-left: 20/@rem; flex: 1; line-height: 60/@rem; text-align: center;}
+.read_head{width: 90%; margin-left: 20/@rem; flex: 1; line-height: 60/@rem; text-align: center;}
 .textcontent{overflow: auto; flex: 20; }
 .read_text{
   li{ padding: 0 20/@rem; line-height: 60/@rem;text-indent: 2em; }

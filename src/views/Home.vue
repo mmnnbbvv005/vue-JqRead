@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <BottomNav v-show="editFlag" />
-    <bookhead :back-visible="false" :search-visible="false" :edit-visible="true" :edit="editFlag" title="书架" @Onedit="changeEdit" />
+    <bookhead :back-visible="false" :search-visible="false" :edit-visible="true" :mine-visible="true" :edit="editFlag" title="书架" @Onedit="changeEdit" @OnMine="menuToggle" />
     <ul class="booklist">
       <p v-if="booklist.length<=0" class="empty">
         暂无书籍，赶快去书城添加书籍吧！
@@ -30,6 +30,9 @@
         删除
       </button>
     </div>
+    <transition name="fade">
+      <Menu v-show="menuFlag" :flag="menuFlag" @menuClose="menuToggle" />
+    </transition>
   </div>
 </template>
 
@@ -37,24 +40,31 @@
 import { getStorage, setStorage } from '@/utils/storage'
 import bookhead from '@/components/Layout/head/index.vue'
 import BottomNav from '@/components/Layout/bottomNav/index'
+import Menu from '@/components/Layout/menu/index'
+import { mapGetters } from 'vuex'
 export default {
   name: 'home',
   components: {
     BottomNav,
-    bookhead
+    bookhead,
+    Menu
   },
   data () {
     return {
       booklist: [],
-      editFlag: true
+      editFlag: true,
+      menuFlag: false
     }
+  },
+  computed: {
+    ...mapGetters(['userInfo'])
   },
   mounted () {
     this.GetBooks()
   },
   methods: {
     GetBooks () {
-      if (getStorage('mybooks')) {
+      if (getStorage('mybooks') && Object.keys(getStorage('mybooks')).length > 0) {
         var list = getStorage('mybooks')
         for (const i in list) {
           list[i]['sel'] = false
@@ -84,6 +94,9 @@ export default {
           }
         }
       }
+    },
+    menuToggle () {
+      this.menuFlag = !this.menuFlag
     }
   }
 }
@@ -108,4 +121,10 @@ export default {
     &:first-child{ border-right: 2/@rem solid @font_col4; color: #333; }}
 }
 .empty{ text-align: center; color: @font_col2; font-size: @font_text2; margin-top: 100/@rem; }
+.fade-enter-active, .fade-leave-active {
+  transition: all .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
 </style>

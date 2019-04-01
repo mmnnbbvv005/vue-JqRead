@@ -1,6 +1,6 @@
 const path = require('path')
 module.exports = {
-  // baseUrl: './', // vueConf.baseUrl, // 根域上下文目录
+  publicPath: './', // vueConf.baseUrl, // 根域上下文目录
   // outputDir: 'dist', // 构建输出目录
   // assetsDir: 'assets', // 静态资源目录 (js, css, img, fonts)
   lintOnSave: true, // 是否开启eslint保存检测，有效值：ture | false | 'error'
@@ -43,7 +43,7 @@ module.exports = {
         ws: true,
         changeOrigin: true,
         pathRewrite: {
-          '^/api': 'http://api.zhuishushenqi.com'
+          '^/api': 'https://api.zhuishushenqi.com'
         }
       },
       '/content': {
@@ -52,6 +52,14 @@ module.exports = {
         changeOrigin: true,
         pathRewrite: {
           '^/content': 'https://chapter2.zhuishushenqi.com/'
+        }
+      },
+      '/sqlapi': {
+        target: 'http://localhost:3000/sqlapi',
+        ws: true,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/sqlapi': ''
         }
       }
     }

@@ -120,6 +120,18 @@ input, button, select, a { cursor: pointer; }
       .btn-footerContainer { padding-bottom: 34/@rem;  }
   }
 }
+input::-webkit-input-placeholder{
+  color:@font_col3;
+}
+input::-moz-placeholder{   /* Mozilla Firefox 19+ */
+  color:@font_col3;
+}
+input:-moz-placeholder{    /* Mozilla Firefox 4 to 18 */
+  color:@font_col3;
+}
+input:-ms-input-placeholder{  /* Internet Explorer 10-11 */
+  color:@font_col3;
+}
 
 // 图标及LOGO
 .IconSize(@w){

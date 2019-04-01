@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from '@/store'
+import axios from 'axios'
 import Icon from 'vue-svg-icon/Icon.vue'
 import { Popup, InfiniteScroll, Lazyload } from 'mint-ui'
 
@@ -12,6 +13,7 @@ import './assets/less/global.css'
 
 // 定义全局变量
 Vue.config.productionTip = false
+Vue.prototype.$axios = axios
 
 Vue.component('icon', Icon)
 new Vue({
