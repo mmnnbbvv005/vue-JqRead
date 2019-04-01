@@ -1,15 +1,24 @@
 # Vue-JqRead
-  基于vue-cli3和追书神器接口制作的移动端小说阅读网站，**仅供参考学习！不用于任何商业用途！**
+  基于node express+mysql+vue-cli3和追书神器接口制作的移动端小说阅读网站，**仅供参考学习！不用于任何商业用途！**
   闲暇时间用vue练练手，就想写个小说网站来看看，选择了追书神器的接口。
   因为偷懒，所以使用了mint—ui的一些小插件，以后慢慢替换。
+
+  没有mysql的话，不要使用登录注册功能，登陆注册只有保存书架的作用
 
 ## 克隆到本地
 ```
 git clone https://github.com/mmnnbbvv005/JqRead.git
+cd JqRead
 ```
 ## 安装依赖
 ```
 npm install
+```
+## 启动服务端
+不是必须，使用登录注册必要
+```
+cd server
+node index
 ```
 ## 运行
 ```
@@ -32,7 +41,7 @@ npm run serve
   12. [获取带子分类的分类](#lj12)
   13. [获取分类详情](#lj13)
 
-### <span id="lj1" />1.获取书籍详情 
+### <span id="lj1" />1.获取书籍详情
 #### 请求URL
 ```
 https://api.zhuishushenqi.com/book/:id
@@ -47,7 +56,7 @@ GET
   ---- | ----- | ------ | ----
   id  | 是 | String | 书籍id
 
-### <span id="lj2" />2.获取书籍相关推荐 
+### <span id="lj2" />2.获取书籍相关推荐
 #### 请求URL
 ```
 https://api.zhuishushenqi.com/book/:id/recommend
@@ -62,7 +71,7 @@ GET
   ---- | ----- | ------ | ----
   id  | 是 | String | 书籍id
 
-### <span id="lj3" />3.获取书籍源 
+### <span id="lj3" />3.获取书籍源
 优质VIP书源被加密，建议选择第二个
 #### 请求URL
 ```
@@ -79,7 +88,7 @@ GET
   view  | 是 | String | summary(请求类型)
   book  | 是 | String | 书籍id
 
-### <span id="lj4" />4.获取书籍章节 
+### <span id="lj4" />4.获取书籍章节
 #### 请求URL
 ```
 https://api.zhuishushenqi.com/atoc/:id
@@ -95,7 +104,7 @@ GET
   id  | 是 | String | 书源id
   view  | 是 | String | chapters(请求类型)
 
-### <span id="lj5" />5.获取章节详细内容 
+### <span id="lj5" />5.获取章节详细内容
 #### 请求URL
 ```
 https://chapter2.zhuishushenqi.com/chapter/:link
@@ -117,7 +126,7 @@ GET
   k  | 是 | String | 2124b73d7e2e1945(不知道是啥)
   t  | 是 | String | 1468223717(不知道是啥)
 
-### <span id="lj6" />6.获取排名分类 
+### <span id="lj6" />6.获取排名分类
 #### 请求URL
 ```
 https://api.zhuishushenqi.com/ranking/gender
@@ -125,7 +134,7 @@ https://api.zhuishushenqi.com/ranking/gender
 #### 请求方式
 GET
 
-### <span id="lj7" />7.获取排名详情 
+### <span id="lj7" />7.获取排名详情
 #### 请求URL
 ```
 https://api.zhuishushenqi.com/ranking/:id
@@ -140,7 +149,7 @@ GET
   ---- | ----- | ------ | ----
   id  | 是 | String | 排名分类id
 
-### <span id="lj8" />8.获取搜索结果 
+### <span id="lj8" />8.获取搜索结果
 #### 请求URL
 ```
 https://api.zhuishushenqi.com/book/fuzzy-search
@@ -157,7 +166,7 @@ GET
   start  | 否 | String | 开始位置
   limit  | 否 | String | 返回数目
 
-### <span id="lj9" />9.获取搜索热词 
+### <span id="lj9" />9.获取搜索热词
 #### 请求URL
 ```
 https://api.zhuishushenqi.com/book/search-hotwords
@@ -165,7 +174,7 @@ https://api.zhuishushenqi.com/book/search-hotwords
 #### 请求方式
 GET
 
-### <span id="lj10" />10.获取搜索自动补全 
+### <span id="lj10" />10.获取搜索自动补全
 #### 请求URL
 ```
 https://api.zhuishushenqi.com/book/auto-complete
@@ -180,7 +189,7 @@ GET
   ---- | ----- | ------ | ----
   query  | 是 | String | 关键字
 
-### <span id="lj11" />11.获取带书籍数量的父分类 
+### <span id="lj11" />11.获取带书籍数量的父分类
 #### 请求URL
 ```
 https://api.zhuishushenqi.com/cats/lv2/statistics
@@ -188,7 +197,7 @@ https://api.zhuishushenqi.com/cats/lv2/statistics
 #### 请求方式
 GET
 
-### <span id="lj12" />12.获取带子分类的分类 
+### <span id="lj12" />12.获取带子分类的分类
 #### 请求URL
 ```
 https://api.zhuishushenqi.com/cats/lv2
@@ -196,7 +205,7 @@ https://api.zhuishushenqi.com/cats/lv2
 #### 请求方式
 GET
 
-### <span id="lj13" />13.获取分类详情 
+### <span id="lj13" />13.获取分类详情
 #### 请求URL
 ```
 https://api.zhuishushenqi.com/book/by-categories
