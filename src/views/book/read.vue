@@ -51,8 +51,10 @@
 
 <script>
 import { getChapters, getBookChapter } from '@/api/book'
+import { Update } from '@/api/user'
 import { Indicator, MessageBox, Toast } from 'mint-ui'
 import { getStorage, setStorage } from '@/utils/storage'
+import { mapGetters } from 'vuex'
 
 import readHead from '@/components/Layout/read/head'
 import readFooter from '@/components/Layout/read/footer'
@@ -84,6 +86,9 @@ export default {
         color: '#000'
       }
     }
+  },
+  computed: {
+    ...mapGetters(['userInfo'])
   },
   mounted () {
     this.init()
@@ -158,6 +163,7 @@ export default {
     },
     // 下一章
     nextChapter () {
+      var _this = this
       if (this.chapter < this.allChapter) {
         var obj = getStorage('mybooks')
         this.chapter++
@@ -167,7 +173,10 @@ export default {
           spinnerType: 'double-bounce'
         })
         this.GetContent(encodeURIComponent(this.chapters[this.chapter].link))
-        if (getStorage('mybooks') && getStorage('mybooks')[this.$route.params.id]) {
+        if (_this.userInfo) {
+          var book = { username: _this.userInfo.username, lastChapter: _this.chapter, id: _this.$route.params.id }
+          Update(book)
+        } else if (getStorage('mybooks') && getStorage('mybooks')[this.$route.params.id]) {
           obj[this.$route.params.id].lastChapter = this.chapter
           setStorage('mybooks', obj)
         }
@@ -177,6 +186,7 @@ export default {
     },
     // 上一章
     prevChapter () {
+      var _this = this
       var obj = getStorage('mybooks')
       if (this.chapter <= 0) {
         Toast('已经是第一章了！')
@@ -189,7 +199,10 @@ export default {
         spinnerType: 'double-bounce'
       })
       this.GetContent(encodeURIComponent(this.chapters[this.chapter].link))
-      if (getStorage('mybooks') && getStorage('mybooks')[this.$route.params.id]) {
+      if (_this.userInfo) {
+        var book = { username: _this.userInfo.username, lastChapter: _this.chapter, id: _this.$route.params.id }
+        Update(book)
+      } else if (getStorage('mybooks') && getStorage('mybooks')[this.$route.params.id]) {
         obj[this.$route.params.id].lastChapter = this.chapter
         setStorage('mybooks', obj)
       }
@@ -231,6 +244,7 @@ export default {
     },
     // 选择章节
     selChapter (item, index) {
+      var _this = this
       var obj = getStorage('mybooks')
       this.chapter = index
       this.title = item.title
@@ -239,7 +253,10 @@ export default {
         spinnerType: 'double-bounce'
       })
       this.GetContent(encodeURIComponent(item.link))
-      if (getStorage('mybooks') && getStorage('mybooks')[this.$route.params.id]) {
+      if (_this.userInfo) {
+        var book = { username: _this.userInfo.username, lastChapter: _this.chapter, id: _this.$route.params.id }
+        Update(book)
+      } else if (getStorage('mybooks') && getStorage('mybooks')[this.$route.params.id]) {
         obj[this.$route.params.id].lastChapter = this.chapter
         setStorage('mybooks', obj)
       }

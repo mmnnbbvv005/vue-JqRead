@@ -71,4 +71,17 @@ router.post('/addBook', (req, res) => {
   })
 })
 
+router.post('/update', (req, res) => {
+  var params = req.body
+  mysql.query('UPDATE `' + params.username + "` SET `lastChapter`='" + params.lastChapter + "' WHERE `id`='" + params.id + "'", function (err, result) {
+    if (err) {
+      res.json(err)
+    }
+    if (result) {
+      res.json(result)
+      res.end('is over')
+    }
+  })
+})
+
 module.exports = router

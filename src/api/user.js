@@ -26,3 +26,18 @@ export function addBook (data) {
     }
   })
 }
+
+/**
+ * 更新章节
+ */
+export function Update (data) {
+  return request({
+    url: '/sqlapi/update',
+    method: 'post',
+    data: {
+      username: data.username,
+      lastChapter: data.lastChapter,
+      id: data.id
+    }
+  })
+}
