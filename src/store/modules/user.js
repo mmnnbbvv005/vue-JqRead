@@ -15,7 +15,6 @@ const user = {
       var obj = null
       var bookrack = {}
       getBookList({ username: value.username }).then(res => {
-        console.log(res)
         obj = {
           username: value.username
         }
