@@ -73,8 +73,8 @@ export default {
     .svg_search{ width: 30/@rem; height: 30/@rem; }}
 }
 .load{ width: 50/@rem; height: 50/@rem; margin: 80/@rem auto; }
-.search{ height: calc(~"100% - 1rem"); height: -webkit-calc(~"100% - 1rem");height: -moz-calc(~"100% - 1rem"); }
-.search_list{ padding: 20/@rem; margin-top: 20/@rem; overflow: auto; height: calc(~"100% - 1.3rem"); height: -webkit-calc(~"100% - 1.3rem");height: -moz-calc(~"100% - 1.3rem");
+.search{ height: 100%;  width: 100%; }
+.search_list{ padding: 20/@rem; margin-top: 20/@rem; overflow: auto; height: 870/@rem;
   li{ background: #fff; height: 250/@rem; margin-bottom: 20/@rem;
     .list_link{ display: block; display: flex; width: 100%; height: 100%; }
     .list_img{ height: 100%;width: 175/@rem; }

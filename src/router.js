@@ -65,6 +65,11 @@ export default new Router({
       path: '/feedback',
       name: 'feedback',
       component: () => import(/* webpackChunkName: "about" */ './views/mine/feedback.vue')
+    },
+    {
+      path: '/setting',
+      name: 'setting',
+      component: () => import(/* webpackChunkName: "about" */ './views/mine/setting.vue')
     }
   ]
 })

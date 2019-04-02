@@ -18,7 +18,7 @@
             </router-link>
           </li>
           <li>
-            <router-link class="link" :to="{path:'/feedback'}">
+            <router-link class="link" :to="{path:'/setting'}">
               <icon name="Setting" class="svg_menu u-cenInBlock" />
               <p class="u-cenInBlock">
                 我的设置
