@@ -12,24 +12,18 @@ const user = {
   },
   actions: {
     SetUserInfo ({ commit }, value) {
-      var obj = null
-      var bookrack = {}
-      getBookList({ username: value.username }).then(res => {
-        obj = {
-          username: value.username
-        }
-        if (res.data.length > 0) {
-          obj['books'] = res.data
-          obj['books'].forEach(index => {
-            bookrack[index.id] = index
+      var books = {}
+      getBookList().then(res => {
+        if (res.data.books.length > 0) {
+          res.data.books.forEach(index => {
+            books[index.id] = index
           })
         }
         if (value.login) {
-          setStorage('username', window.btoa(value.username))
           RouterLink('/home')
         }
-        setStorage('mybooks', bookrack)
-        commit('SET_USERINFO', obj)
+        setStorage('mybooks', books)
+        commit('SET_USERINFO', { username: res.data.username, books: books })
       })
     }
   }

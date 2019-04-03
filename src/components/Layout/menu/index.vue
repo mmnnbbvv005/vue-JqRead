@@ -67,7 +67,7 @@ export default {
       }
     },
     outLogin () {
-      removeStorage('username')
+      removeStorage('token')
       this.$router.go(0)
     }
   }

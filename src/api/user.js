@@ -3,13 +3,10 @@ import request from '@/utils/request'
 /**
  * 获取用户书架
  */
-export function getBookList (data) {
+export function getBookList () {
   return request({
     url: '/sqlapi/booklist',
-    method: 'post',
-    data: {
-      username: data.username
-    }
+    method: 'get'
   })
 }
 

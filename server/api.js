@@ -1,6 +1,8 @@
 var mysql = require('./mysql')
 var express = require('express')
+var jwt = require('jsonwebtoken')
 var router = express.Router()
+const secret = 'JQREAD'
 mysql.connect()
 
 router.post('/login', (req, res) => {
@@ -11,7 +13,11 @@ router.post('/login', (req, res) => {
     }
     if (result) {
       if (result.length > 0) {
-        res.json({ message: '登录成功', status: 1 })
+        const payload = {
+          name: params.username
+        }
+        const token = jwt.sign(payload, secret)
+        res.json({ message: '登录成功', token: token, status: 1 })
       } else {
         res.json({ message: '用户名或密码错误', status: 0 })
       }
@@ -45,16 +51,22 @@ router.post('/register', (req, res) => {
   })
 })
 
-router.post('/booklist', (req, res) => {
-  var params = req.body
-  mysql.query('SELECT * FROM `' + params.username + '`', function (err, result) {
+router.get('/booklist', (req, res) => {
+  var token = req.headers['x-guesttoken']
+  jwt.verify(token, secret, (err, decoded) => {
     if (err) {
-      res.json(err)
+      console.log(err)
+      return
     }
-    if (result) {
-      res.json(result)
-      res.end('is over')
-    }
+    mysql.query('SELECT * FROM `' + decoded.name + '`', function (err, result) {
+      if (err) {
+        res.json(err)
+      }
+      if (result) {
+        res.json({ username: decoded.name, books: result })
+        res.end('is over')
+      }
+    })
   })
 })
 

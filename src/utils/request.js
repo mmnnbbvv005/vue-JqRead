@@ -1,5 +1,6 @@
 import axios from 'axios'
 import qs from 'qs'
+import { getStorage } from '@/utils/storage'
 
 // 创建axios实例
 const service = axios.create({
@@ -11,6 +12,10 @@ service.interceptors.request.use(
   config => {
     config.headers['X-Requested-With'] = 'XMLHttpRequest'
     config.headers['X-Platform'] = window.__wxjs_environment === 'miniprogram' ? 'MiniProgram' : 'H5'
+    const guestToken = getStorage('token')
+    if (guestToken) {
+      config.headers['X-GuestToken'] = guestToken
+    }
     return config
   },
   error => ({ status: 0, msg: error.message })

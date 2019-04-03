@@ -23,10 +23,12 @@
 </template>
 
 <script>
+import register from '@/views/login/register'
+
 import { Toast } from 'mint-ui'
 import { login } from '@/api/login'
-import register from '@/views/login/register'
 import { mapGetters } from 'vuex'
+import { getStorage, setStorage } from '@/utils/storage'
 export default {
   components: {
     register
@@ -43,7 +45,7 @@ export default {
     ...mapGetters(['userInfo'])
   },
   mounted () {
-    if (this.userInfo) {
+    if (getStorage('token')) {
       this.$router.replace('/home')
     }
   },
@@ -56,7 +58,8 @@ export default {
         _this.disabled = false
         if (data.data.status) {
           Toast(data.data.message)
-          _this.$store.dispatch('SetUserInfo', { username: _this.username, login: true })
+          setStorage('token', data.data.token)
+          _this.$store.dispatch('SetUserInfo', { login: true })
         } else {
           Toast(data.data.message)
         }

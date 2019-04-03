@@ -21,8 +21,8 @@ export default {
         screenAdaptation()
       }, false)
     }
-    if (getStorage('username')) {
-      this.$store.dispatch('SetUserInfo', { username: window.atob(getStorage('username')) })
+    if (getStorage('token')) {
+      this.$store.dispatch('SetUserInfo', { login: false })
     }
   }
 }
